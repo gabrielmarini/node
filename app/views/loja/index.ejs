@@ -8,5 +8,23 @@
     </head>
     <body>
         <h1>Loja</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>Preço</th>
+                </tr>
+            </thead>
+            <tbody>
+                <%for(var int = 0; int < lista.length;int++){%>
+                    <tr>
+                        <td><%=lista[int].id%></td>
+                        <td><%=lista[int].nome%></td>
+                        <td><%=lista[int].preco%></td>
+                    </tr>
+                <%}%>
+            </tbody>
+        </table>
     </body>
 </html>
