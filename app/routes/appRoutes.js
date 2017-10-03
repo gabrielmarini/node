@@ -3,7 +3,14 @@ module.exports = function(router){
         var conexao = router.config.connection();
         var LojaDAO = new router.infra.LojaDAO(conexao);
         LojaDAO.lista(function(err,result){
-            res.render('loja/index',{lista:result});
+            res.format({
+                html: function(){
+                    res.render('loja/index',{lista:result});
+                },
+                json: function(){
+                    res.json(result);
+                }
+            });
         });
         conexao.end();
     });
@@ -13,6 +20,15 @@ module.exports = function(router){
     });
     router.post('/produtos/cadastrar', function(req,res){
         var produto = req.body;
+
+        req.assert('name', 'name is required').notEmpty();
+        req.assert('price', 'price is required').notEmpty();
+
+        if(req.validationErrors()){
+            res.json(req.validationErrors());
+            return;
+        }
+
         var conexao = router.config.connection();
         var LojaDAO = new router.infra.LojaDAO(conexao);
         LojaDAO.salva(produto, function(error, resultados){
