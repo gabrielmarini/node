@@ -25,7 +25,7 @@ module.exports = function(router){
         req.assert('price', 'price is required').notEmpty();
 
         if(req.validationErrors()){
-            res.json(req.validationErrors());
+            res.status(400).json(req.validationErrors());
             return;
         }
 
